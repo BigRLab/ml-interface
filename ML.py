@@ -22,11 +22,9 @@ def process(param_dict, root_path, job_name):
 	# print 'path:', job_path
 	# print 'Entered process'
 	# data_path=job_path+'\\data\\data'
-	# data_path=root_path+'\\tmp\\data_'+job_name
-	data_path=root_path+'/tmp/data_'+job_name
+	data_path=root_path+'\\tmp\\data_'+job_name
 	# model_path=job_path+'\\model\\'+job_name+'.pkl'
-	# model_path=root_path+'\\tmp\\'+job_name+'.pkl'
-	model_path=root_path+'/tmp/'+job_name+'.pkl'
+	model_path=root_path+'\\tmp\\'+job_name+'.pkl'
 	# print 'data path:', data_path
 	# print param_dict.keys()
 	if len(param_dict['header_row'])==0:

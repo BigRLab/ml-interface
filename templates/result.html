@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+	<link rel="stylesheet" href="static/css/style.css">
+	  <script>
+        var filename = {{ filename }}
+        var metric_value = {{ metric_value }}
+        var metric_type = {{ metric_type }}
+    </script>    
+</head>	
+   <body>
+	   <div class="container">	
+		   <h1>Training complete!</h1> <br>
+		   <h3>{{ metric_type }}: {{metric_value}}</h3>
+		   <form action="/model/{{filename}}" method="post">
+			   	<div>
+					<button type="submit" name="submit">Download model</button>
+				</div>
+			</form>
+			<br>
+			<form action="/formSubmit1" method="post">
+				<input type="file" name="pred_file" accept=".data, .csv, .dat">
+				<button type="submit" name="submit">Get predictions</button>
+			</form>	
+			<br>
+			<form action="/jobFinished" method="post">
+			   	<div>
+			   		<input type="hidden" name="job_name" value="{{filename}}">
+					<button type="submit" name="submit">Train another model</button>
+				</div>
+			</form>
+			
+		</div>
+   </body>
+</html>

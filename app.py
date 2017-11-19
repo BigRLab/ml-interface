@@ -54,32 +54,22 @@ def submit():
 	if(request.method == 'POST'):
 		f = request.files['file']
 		job_name=request.form['job_name']+'_'+randomword(5)
-		# job_path=app.root_path+'\\jobs\\'+job_name
+
 		# job_path=app.root_path+'\\tmp\\'#+job_name
 		job_path=app.root_path
 		# model_path=job_path+'\\tmp\\'+job_name+'.pkl'
 		model_path=job_path+'/tmp/'+job_name+'.pkl'
-		# print job_path, model_path
-		# if not os.path.exists(job_path):
-		# 	os.makedirs(job_path)
-		# 	os.makedirs(job_path+'\\data')
-		# 	os.makedirs(job_path+'\\model')
-		# print 'job_path',job_path
-		# f.save(job_path+'\\data\\'+'data')#secure_filename(f.filename))
-		
-		# f.save(app.root_path+'\\tmp\\data_'+job_name)#secure_filename(f.filename))
+
+		# f.save(app.root_path+'\\tmp\\data_'+job_name)
 		f.save(app.root_path+'/tmp/data_'+job_name)
 		try:
 			filename, metric_value=process(request.form, job_path, job_name)
 		except ValueError:
 			error_msg='Target data is non numeric. Regression requires target to be numeric.'
-			# return ('Target data is non numeric. Regression requires target to be numeric.')
 			return render_template('error_page.html', msg=error_msg)
 		except KeyError:
 			error_msg="The entered column doesn't exist. Please note that the columns are 0 indexed."
 			return render_template('error_page.html', msg=error_msg)
-			# return "The entered column doesn't exist. Please note that the columns are 0 indexed."
-		# print filename, metric_value
 		if request.form['train_type']=='reg':
 			METRIC_TYPE='RMSE'
 		else:
@@ -93,13 +83,6 @@ def train_on_model():
 	temp_data=request.files['to_predict']
 
 	job_name=request.form['job_name']+'_'+randomword(5)
-	# job_path=app.root_path+'\\jobs\\'+job_name
-	# job_path=app.root_path+'\\tmp\\'+job_name
-
-	# if not os.path.exists(job_path):
-	# 		os.makedirs(job_path)
-	# 		os.makedirs(job_path+'\\model')
-	# 		os.makedirs(job_path+'\\data')
 
 	# model_path=job_path+'\\model\\'+job_name+'.pkl'
 	model_path=app.root_path+'\\tmp\\'+job_name+'.pkl'

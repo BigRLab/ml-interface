@@ -20,7 +20,8 @@ def home():
 def get_output_file(name):
 	print 'adfsdfsdffdsf'
 	print 'file-name', name
-	file_name=app.root_path+'\\jobs\\'+name+'\\model\\'+name+'.pkl'
+	# file_name=app.root_path+'\\jobs\\'+name+'\\model\\'+name+'.pkl'
+	file_name=app.root_path+'\\tmp\\'+name+'\\model\\'+name+'.pkl'
 	return send_file(file_name, as_attachment=True)
 
 @app.route('/formSubmit', methods=['POST'])
@@ -28,7 +29,8 @@ def submit():
 	if(request.method == 'POST'):
 		f = request.files['file']
 		job_name=request.form['job_name']+'_'+randomword(5)
-		job_path=app.root_path+'\\jobs\\'+job_name
+		# job_path=app.root_path+'\\jobs\\'+job_name
+		job_path=app.root_path+'\\tmp\\'+job_name
 		model_path=job_path+'\\model\\'+job_name+'.pkl'
 		print job_path, model_path
 		if not os.path.exists(job_path):
@@ -52,7 +54,8 @@ def train_on_model():
 	temp_data=request.files['to_predict']
 
 	job_name=request.form['job_name']+'_'+randomword(5)
-	job_path=app.root_path+'\\jobs\\'+job_name
+	# job_path=app.root_path+'\\jobs\\'+job_name
+	job_path=app.root_path+'\\tmp\\'+job_name
 
 	if not os.path.exists(job_path):
 			os.makedirs(job_path)

@@ -33,11 +33,11 @@ def submit():
 		job_path=app.root_path+'\\tmp\\'+job_name
 		model_path=job_path+'\\model\\'+job_name+'.pkl'
 		print job_path, model_path
-		if not os.path.exists(job_path):
-			os.makedirs(job_path)
-			os.makedirs(job_path+'\\data')
-			os.makedirs(job_path+'\\model')
-		print 'job_path',job_path
+		# if not os.path.exists(job_path):
+		# 	os.makedirs(job_path)
+		# 	os.makedirs(job_path+'\\data')
+		# 	os.makedirs(job_path+'\\model')
+		# print 'job_path',job_path
 		f.save(job_path+'\\data\\'+'data')#secure_filename(f.filename))
 		filename, metric_value=process(request.form, job_path, job_name)
 		print filename, metric_value
@@ -55,15 +55,17 @@ def train_on_model():
 
 	job_name=request.form['job_name']+'_'+randomword(5)
 	# job_path=app.root_path+'\\jobs\\'+job_name
-	job_path=app.root_path+'\\tmp\\'+job_name
+	# job_path=app.root_path+'\\tmp\\'+job_name
 
-	if not os.path.exists(job_path):
-			os.makedirs(job_path)
-			os.makedirs(job_path+'\\model')
-			os.makedirs(job_path+'\\data')
+	# if not os.path.exists(job_path):
+	# 		os.makedirs(job_path)
+	# 		os.makedirs(job_path+'\\model')
+	# 		os.makedirs(job_path+'\\data')
 
-	model_path=job_path+'\\model\\'+job_name+'.pkl'
-	data_path=job_path+'\\data\\'+'data'
+	# model_path=job_path+'\\model\\'+job_name+'.pkl'
+	model_path='\\tmp\\'+job_name+'.pkl'
+	# data_path=job_path+'\\data\\'+'data'
+	data_path='\\tmp\\'+'data_'+job_name
 
 	temp_model.save(model_path)
 	temp_data.save(data_path)

@@ -39,7 +39,12 @@ def fetch_pred():
 		model_path=app.root_path+'\\tmp\\'+job_name+'.pkl'
 		data_path=app.root_path+'\\tmp\\data_'+job_name
 		header=None
-		final_pred_array=make_predictions(model_path, data_path, header)
+		try:
+			final_pred_array=make_predictions(model_path, data_path, header)
+		except ValueError:
+			error_msg="Incorrect data file selected. This model wasn't trained on this data format."
+			# return ("Incorrect data file selected. This model wasn't trained on this data format.")
+			return render_template('error_page.html', msg=error_msg)
 		final_path=app.root_path+'\\tmp\\'+'predictions_'+job_name+'.txt'
 		np.savetxt(final_path, final_pred_array)
 		return send_file(final_path, as_attachment=True)
@@ -62,7 +67,16 @@ def submit():
 		# f.save(job_path+'\\data\\'+'data')#secure_filename(f.filename))
 		
 		f.save(app.root_path+'\\tmp\\data_'+job_name)#secure_filename(f.filename))
-		filename, metric_value=process(request.form, job_path, job_name)
+		try:
+			filename, metric_value=process(request.form, job_path, job_name)
+		except ValueError:
+			error_msg='Target data is non numeric. Regression requires target to be numeric.'
+			# return ('Target data is non numeric. Regression requires target to be numeric.')
+			return render_template('error_page.html', msg=error_msg)
+		except KeyError:
+			error_msg="The entered column doesn't exist. Please note that the columns are 0 indexed."
+			return render_template('error_page.html', msg=error_msg)
+			# return "The entered column doesn't exist. Please note that the columns are 0 indexed."
 		# print filename, metric_value
 		if request.form['train_type']=='reg':
 			METRIC_TYPE='RMSE'
@@ -99,7 +113,12 @@ def train_on_model():
 	# else:
 	# 	header=int(header)
 	header=None
-	final_pred_array=make_predictions(model_path, data_path, header)
+	try:
+		final_pred_array=make_predictions(model_path, data_path, header)
+	except ValueError:
+		error_msg="This model is not comptable with the test data selected. This model wasn't trained on this data format."
+		return render_template('error_page.html', msg=error_msg)
+		# return ("This model is not comptable with the test data selected. This model wasn't trained on this data format.")
 	final_path=app.root_path+'\\tmp\\'+'predictions_'+job_name+'.txt' #job_path+'\\pred\\predictions.txt'
 	np.savetxt(final_path, final_pred_array)
 	return send_file(final_path, as_attachment=True)

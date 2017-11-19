@@ -61,11 +61,11 @@ def submit():
 		# job_path=app.root_path+'\\tmp\\'#+job_name
 		job_path=app.root_path
 		# model_path=job_path+'\\tmp\\'+job_name+'.pkl'
-		model_path=os.path.join(job_name+'.pkl')#job_path+'/tmp/'+job_name+'.pkl'
+		model_path=os.path.join(MYDIR, 'tmp', job_name+'.pkl')#job_path+'/tmp/'+job_name+'.pkl'
 
 		# f.save(app.root_path+'\\tmp\\data_'+job_name)
 		# f.save(app.root_path+'/tmp/data_'+job_name)
-		f.save(os.path.join(MYDIR, 'tmp', 'data_'+job_name))#app.root_path+'/tmp/data_'+job_name)
+		f.save(os.path.join('data_'+job_name))#app.root_path+'/tmp/data_'+job_name)
 		try:
 			filename, metric_value=process(request.form, job_path, job_name)
 		except ValueError:

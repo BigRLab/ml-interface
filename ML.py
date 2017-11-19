@@ -4,7 +4,8 @@ from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 from sklearn.metrics import accuracy_score, mean_squared_error
 import os
 import pandas as pd
-import pickle
+# import pickle
+import cPickle as pickle
 import numpy as np
 import time
 
@@ -17,11 +18,13 @@ algo_dict={'rf_cla':RandomForestClassifier,
 	 'svm_reg':SVR,
 	 'dt_reg':DecisionTreeRegressor}
 
-def process(param_dict, job_path, job_name):
+def process(param_dict, root_path, job_name):
 	# print 'path:', job_path
 	# print 'Entered process'
-	data_path=job_path+'\\data\\data'
-	model_path=job_path+'\\model\\'+job_name+'.pkl'
+	# data_path=job_path+'\\data\\data'
+	data_path=root_path+'\\tmp\\data_'+job_name
+	# model_path=job_path+'\\model\\'+job_name+'.pkl'
+	model_path=root_path+'\\tmp\\'+job_name+'.pkl'
 	# print 'data path:', data_path
 	# print param_dict.keys()
 	if len(param_dict['header_row'])==0:
@@ -60,14 +63,14 @@ def process(param_dict, job_path, job_name):
 		rmse=np.sqrt(mean_squared_error(y_test, predictions))
 		metric_value=rmse
 		# print 'rmse', metric_value
-	with open(model_path, 'wb') as f:
+	with open(model_path, 'w') as f:
 		pickle.dump(model, f)
 		# print 'model saved'
-	return job_path, metric_value
+	return root_path, metric_value
 
 def make_predictions(model_path, data_path, header):
 	X=pd.read_table(data_path, sep=None, header=header, engine='python')
-	with open(model_path, 'rb') as f:
-		model=pickle.load(f)
+	#with open(model_path, 'rb') as f:
+	model=pickle.load(open(model_path, 'r'))
 	pred=model.predict(X)
 	return pred

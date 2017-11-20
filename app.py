@@ -19,10 +19,7 @@ def home():
 
 @app.route('/model/<name>', methods=['GET','POST'])
 def get_output_file(name):
-	# print 'adfsdfsdffdsf'
 	print 'file-name', name
-	# file_name=app.root_path+'/jobs/'+name+'/model/'+name+'.pkl'
-	# file_name=app.root_path+'/tmp/'+name+'/model/'+name+'.pkl'
 	file_name=app.root_path+'/tmp/'+name+'.pkl'
 	print 'f name', file_name
 	return send_file(file_name, as_attachment=True)

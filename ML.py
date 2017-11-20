@@ -29,7 +29,7 @@ def process(param_dict, root_path, job_name):
 	NO_TRAIN=int(TRAIN_PERCENTAGE*df.shape[0])
 	NO_TEST=int(df.shape[0]-NO_TRAIN)
 	algo_name=param_dict['algorithm']+'_'+param_dict['train_type']
-
+	print 'model name', algo_name
 	train=df.head(NO_TRAIN)
 	test=df.tail(NO_TEST)
 	y=df[int(param_dict['y_col'])]

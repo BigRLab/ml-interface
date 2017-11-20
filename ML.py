@@ -32,6 +32,7 @@ def process(param_dict, root_path, job_name):
 
 	train=df.head(NO_TRAIN)
 	test=df.tail(NO_TEST)
+	y=df[int(param_dict['y_col'])]
 	y_train=train[int(param_dict['y_col'])]
 	y_test=test[int(param_dict['y_col'])]
 	y_map={}
